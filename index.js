@@ -24,7 +24,7 @@ function main () {
         process.exit(1)
     }
 
-    core.info(`generating a presigned url for '${filePath}'`)
+    core.info(`generating a presigned url for 's3://${bucket}/${path}'`)
     try {
         const url = getSignedUrl(cli, new GetObjectCommand({
             Bucket: bucket,
