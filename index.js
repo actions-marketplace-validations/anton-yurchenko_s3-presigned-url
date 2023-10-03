@@ -19,8 +19,8 @@ function main () {
                 secretAccessKey,
             },
         });
-    } catch (err) {
-        core.setFailed(`error initializing s3 client: '${error.message}'`)
+    } catch (e) {
+        core.setFailed(`error initializing s3 client: '${e.message}'`)
         process.exit(1)
     }
 
@@ -32,8 +32,8 @@ function main () {
         }), { expiresIn: expiresIn });
 
         core.setOutput('url', url);
-    } catch (err) {
-        core.setFailed(`error generating a presigned url: '${error.message}'`)
+    } catch (e) {
+        core.setFailed(`error generating a presigned url: '${e.message}'`)
         process.exit(1)
     }
     core.info(`presigned url: '${url}'`)
