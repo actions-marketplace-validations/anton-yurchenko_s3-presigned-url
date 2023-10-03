@@ -10,7 +10,6 @@ function main () {
     const expiresIn = parseInt(core.getInput('expires_in', { required: false }));
     const path = core.getInput('path', { required: true });
 
-    core.info(`initializing s3`)
     try {
         const cli = new S3Client({
             region,
@@ -19,24 +18,17 @@ function main () {
                 secretAccessKey,
             },
         });
-    } catch (e) {
-        core.setFailed(`error initializing s3 client: '${e.message}'`)
-        process.exit(1)
-    }
 
-    core.info(`generating a presigned url for 's3://${bucket}/${path}'`)
-    try {
         const url = getSignedUrl(cli, new GetObjectCommand({
             Bucket: bucket,
             Key: path,
         }), { expiresIn: expiresIn });
 
-        core.setOutput('url', url);
+        core.info(`s3://${bucket}/${path} - ${url}`)
     } catch (e) {
         core.setFailed(`error generating a presigned url: '${e.message}'`)
         process.exit(1)
     }
-    core.info(`presigned url: '${url}'`)
 }
 
 main()
