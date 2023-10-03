@@ -1,0 +1,32 @@
+name: S3 PreSigned URL
+description: GitHub Action to generate an AWS S3 PreSigned URL
+branding:
+  icon: link
+  color: orange
+inputs:
+  region:
+    description: S3 bucket region
+    default: us-east-1
+    required: true
+  access_key:
+    description: IAM User access key
+    required: true
+  secret_access_key:
+    description: IAM User secret access key
+    required: true
+  bucket:
+    description: S3 bucket name
+    required: true
+  path:
+    description: "object path (for example: artifacts/app.exe)"
+    required: true
+  expires_in:
+    description: Number of seconds until the pre-signed URL expires
+    required: true
+    default: "3600"
+outputs:
+  url:
+    description: "PreSigned URL"
+runs:
+  using: "node16"
+  main: "index.js"
