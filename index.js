@@ -1,30 +1,36 @@
 const core = require('@actions/core')
-const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
-const getSignedUrl = require('@aws-sdk/s3-request-presigner');
+const AWS = require('aws-sdk');
 
 function main () {
     const region = core.getInput('region', { required: true });
     const accessKey = core.getInput('access_key', { required: true });
     const secretAccessKey = core.getInput('secret_access_key', { required: true });
     const bucket = core.getInput('bucket', { required: true });
-    const expiresIn = parseInt(core.getInput('expires_in', { required: false }));
+    const expiresIn = core.parseInt(core.getInput('expires_in', { required: false }));
     const path = core.getInput('path', { required: true });
 
-    try {
-        const cli = new S3Client({
-            region,
-            credentials: {
-                accessKey,
-                secretAccessKey,
-            },
-        });
+    AWS.config.update({
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey,
+        region: region,
+    });
 
-        const url = getSignedUrl(cli, new GetObjectCommand({
+    try {
+        const s3 = new AWS.S3();
+
+        const params = {
             Bucket: bucket,
             Key: path,
-        }), { expiresIn: expiresIn });
+            Expires: expiresIn
+        };
 
-        core.info(`s3://${bucket}/${path} - ${url}`)
+        s3.getSignedUrl('getObject', params, (err, url) => {
+            if (err) {
+                console.error('Error generating presigned URL:', err);
+            } else {
+                core..info(`s3://${bucket}/${path} - ${url}`)
+            }
+        });
     } catch (e) {
         core.setFailed(`error generating a presigned url: '${e.message}'`)
         process.exit(1)
