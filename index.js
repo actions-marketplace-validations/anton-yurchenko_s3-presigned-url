@@ -28,7 +28,7 @@ function main () {
             if (err) {
                 console.error('Error generating presigned URL:', err);
             } else {
-                core..info(`s3://${bucket}/${path} - ${url}`)
+                core.info(`s3://${bucket}/${path} - ${url}`)
             }
         });
     } catch (e) {
