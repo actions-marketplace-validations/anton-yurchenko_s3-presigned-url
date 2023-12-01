@@ -29,6 +29,6 @@
   "homepage": "https://github.com/anton-yurchenko/s3-signed-url#readme",
   "dependencies": {
     "@actions/core": "^1.10.1",
-    "aws-sdk": "^2.1468.0"
+    "aws-sdk": "^2.1509.0"
   }
 }
