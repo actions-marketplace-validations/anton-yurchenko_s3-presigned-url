@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/anton-yurchenko/s3-pre-signed-url#readme",
   "dependencies": {
-    "@actions/core": "^1.11.1",
-    "@aws-sdk/client-s3": "^3.687.0",
-    "@aws-sdk/s3-request-presigner": "^3.758.0"
+    "@actions/core": "^2.0.1",
+    "@aws-sdk/client-s3": "^3.958.0",
+    "@aws-sdk/s3-request-presigner": "^3.958.0"
   }
 }
